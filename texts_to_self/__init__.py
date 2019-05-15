@@ -1,6 +1,5 @@
-from celery import Celery
 from flask import Flask
-
+from celery import Celery
 
 def make_celery(app):
     celery = Celery(app.import_name)
@@ -34,3 +33,4 @@ def create_app():
 
     app.celery = make_celery(app)
     return app
+
