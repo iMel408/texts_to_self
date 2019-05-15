@@ -25,6 +25,10 @@ def create_app():
     def hello():
         return 'Flask is Live!'
 
+    from texts_to_self.model import connect_to_db, db
+
+    connect_to_db(app)
+    db.init_app(app)
 
     from . import tasks
 
