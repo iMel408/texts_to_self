@@ -15,7 +15,7 @@ def sleep(message, seconds=1):
 @celery.task()
 def run_jobs():
     """send sms messages due for current hour"""
-    #
+
     with app.app_context():
         db.init_app(app)
 

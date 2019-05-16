@@ -1,5 +1,7 @@
 from flask import Flask
 from celery import Celery
+from texts_to_self.model import *
+
 
 def make_celery(app):
     celery = Celery(app.import_name)
@@ -29,8 +31,13 @@ def create_app():
     connect_to_db(app)
     db.init_app(app)
 
+    from . import main, auth
+
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(main.bp)
+    app.add_url_rule('/', endpoint='user')
+
     from . import tasks
 
     app.celery = make_celery(app)
     return app
-
