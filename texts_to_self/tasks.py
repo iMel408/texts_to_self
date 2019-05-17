@@ -3,14 +3,13 @@ from texts_to_self.twilio_routes import *
 from texts_to_self.model import *
 from datetime import datetime
 
-
-@celery.shared_task()
-def sleep(message, seconds=1):
-    import time
-    time.sleep(seconds)
-    print(message)
-    return seconds
-
+#
+# @celery.shared_task()
+# def sleep(message, seconds=1):
+#     import time
+#     time.sleep(seconds)
+#     print(message)
+#     return seconds
 
 @celery.task()
 def run_jobs():

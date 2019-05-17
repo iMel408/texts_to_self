@@ -2,3 +2,4 @@
 __pycache__/
 texts_to_self/env.cfg
 venv/
+celerybeat-schedule.db

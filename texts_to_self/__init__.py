@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask, request
 from celery import Celery
 from texts_to_self.model import *
+from twilio.twiml.messaging_response import MessagingResponse
 
 
 def make_celery(app):
@@ -37,7 +38,40 @@ def create_app():
     app.register_blueprint(main.bp)
     app.add_url_rule('/', endpoint='user')
 
+    @app.route("/incoming", methods=['GET', 'POST'])
+    def receive_reply():
+        """Respond to incoming messages with a friendly SMS."""
+
+        job = Job.query.filter_by(phone=request.values.get('From')).first()
+
+        msg_type = 'inbound'
+        job_id = job.id
+        msg_sid = request.values.get('MessageSid')
+        user_phone = request.values.get('From')
+        msg_body = request.values.get('Body')
+        msg_status = request.values.get('SmsStatus')
+
+        new_reply = Event(
+            msg_type=msg_type,
+            job_id=job_id,
+            msg_sid=msg_sid,
+            user_phone=user_phone,
+            msg_body=msg_body,
+            msg_status=msg_status
+        )
+
+        db.session.add(new_reply)
+        db.session.commit()
+
+        resp = MessagingResponse()
+        resp.message("Your response has been logged.")
+
+        print(resp)
+
+        return str(resp)
+
     from . import tasks
 
     app.celery = make_celery(app)
     return app
+
