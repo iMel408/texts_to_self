@@ -17,7 +17,7 @@ class User(db.Model):
     updated = db.Column(db.DateTime(), default=datetime.utcnow)
 
     def __repr__(self):
-        return f'<username: {self.username}>'
+        return f'<username: {self.username}, user_id: {self.id}>'
 
 
 class Job(db.Model):

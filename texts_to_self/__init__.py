@@ -23,9 +23,9 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object('texts_to_self.config')
 
-    @app.route('/')
-    def hello():
-        return 'Flask is Live!'
+    # @app.route('/')
+    # def hello():
+    #     return 'Flask is Live!'
 
     from texts_to_self.model import connect_to_db, db
 

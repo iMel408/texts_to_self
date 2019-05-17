@@ -1,16 +1,17 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, g
 from texts_to_self.auth import login_required
+
 from texts_to_self.model import *
 
 bp = Blueprint('main', __name__)
 
 
-@bp.route('/user/<int:id>')
+# @bp.route('/user/<int:id>')
+@bp.route('/')
 @login_required
-def user_page(id):
-    """show user page/info"""
-
-    user = User.query.get(id)
+def user_page():
+    """show user page/info. before_app_request is checking on g.user"""
+    user = g.user
     active_job = Job.query.filter_by(user=user, active=True).first()
 
     if active_job:
@@ -34,3 +35,6 @@ def user_page(id):
                                values=line_values)
 
     return render_template('main/user.html', user=user)
+
+
+
