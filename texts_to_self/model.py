@@ -31,7 +31,8 @@ class Job(db.Model):
     phone = db.Column(db.String(20), unique=True, nullable=True)
     msg_txt = db.Column(db.String(160))
     frequency = db.Column(db.String, default='daily')
-    time = db.Column(db.String, default='12:00')
+    time = db.Column(db.String(2), default='12')
+    timezone = db.Column(db.String, default="America/Los_Angeles")
     created = db.Column(db.DateTime(), default=datetime.utcnow)
     updated = db.Column(db.DateTime(), default=datetime.utcnow)
 

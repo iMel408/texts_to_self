@@ -11,11 +11,13 @@
 
 
     <ul>
-      <li> Runs <b>{{ job.frequency }} </b> at <b> {{ job.time }} </b>  <a href="app/jobs">Update</a> </li>
 
-{#      <li> Runs <b>{{ job.frequency }} </b> at <b> {{ job.time }} </b>  <a href="{{  url_for('app.jobs') }}">Update</a> </li>#}
+     <li> Runs <b>{{ job.frequency }} </b> at <b> {{ job.time }} </b>  <a href="{{  url_for('main.setup') }}">Update</a> </li>
     </ul>
 
+{% else %}
+
+ <h3>Active Job:</h3> <li> <a href="{{  url_for('main.setup') }}">Setup</a></li>
 
   {% endif %}
 

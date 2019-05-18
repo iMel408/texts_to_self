@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+   <h1>{% block title %}Reminder Setup{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+   <form method="POST">
+       <label for="telNo">Phone number:</label>
+       <input id="telNo" name="telNo" type="tel" size="20" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+       <span> 321-654-8790</span>
+       <label for="msg_txt">Message Text</label>
+       <select id = "msg_txt">
+            {% for item in ['What was your level of anxiety today? [1-10]',
+           'What was your level of depression today? [1-10]',' What level were you at today? [1-10'] %}
+        <option value = "{{ request.form['msg_txt'] }}" > {{item}}  </option>
+        {% endfor %}
+            </select>
+
+       <label for="frequency">Frequency</label>
+       <select id = "frequency">
+            {% for item in ['Daily'] %}
+        <option value = "{{ request.form['frequency'] }}"> {{item}}  </option>
+        {% endfor %}
+            </select>
+
+       <label for="time">Time</label>
+       <select id = "time">
+            {% for item in ['AM','PM'] %}
+                {% for hr in range(1,13) %}
+        <option value = "{{ request.form['time'] }}"> {{hr}} {{item}}  </option>
+        {% endfor %}
+           {% endfor %}
+       </select>
+
+       <label for="timezone">Timezone</label>
+       <select id = "timezone">
+            {% for item in tz_list %}
+        <option value = "{{ request.form['timezone'] }}"> {{item}}  </option>
+        {% endfor %}
+            </select>
+       <input type="submit" value="Save">
+   </form>
+{% endblock %}
