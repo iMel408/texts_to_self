@@ -106,7 +106,7 @@ nav ul li a, nav ul li span, header .action {
 
 .content form {
   margin: 1em 0;
-  display: flex;
+  display: block;
   flex-direction: column;
 }
 
@@ -117,11 +117,20 @@ nav ul li a, nav ul li span, header .action {
 
 .content input, .content textarea {
   margin-bottom: 1em;
+  max-width: 200px;
 }
 
 .content textarea {
   min-height: 12em;
   resize: vertical;
+}
+
+.content select {
+  max-width: fit-content;
+}
+
+.content span {
+  font-size: 0.70em;
 }
 
 input.danger {

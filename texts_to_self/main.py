@@ -1,6 +1,10 @@
 import pytz
+import datetime
 from flask import Blueprint, flash, request, render_template, g, redirect, url_for
 from texts_to_self.auth import login_required
+
+
+
 
 from texts_to_self.model import *
 
@@ -43,19 +47,30 @@ def user_page():
 def setup():
 
     user = g.user
-    tz_list = pytz.common_timezones
+
+    tz_list = pytz.country_timezones('us')
+    # tz_list = ['US/Pacific', 'US/Central', 'US/Eastern', 'US/Mountain', 'US/Hawaii', 'US/Alaska', 'US/Arizona',
+    #            'US/East-Indiana', 'US/Indiana-Starke', 'US/Michigan']
+
+    msg_lst = ['What was your level of anxiety today? (1-10)',
+               'What was your level of depression today? (1-10)',
+               'What level were you at today? (1-10)']
+
 
     if request.method == 'POST':
+        print(request.form)
+        # for k,v in request.form:
+        #     print(k,v)
 
         phone = request.form['phone']
         msg_txt = request.form['msg_txt']
         frequency = request.form['frequency']
-        time = request.form['time']
+        user_time = request.form['user_time']
         timezone = request.form['timezone']
-        active = request.form['active']
+        # active = request.form['active']
         error = None
 
-        if not time:
+        if not user_time:
             error = 'Time is Required!'
 
         if error is not None:
@@ -63,16 +78,15 @@ def setup():
         else:
             new_job = Job(
                 user_id=user.id,
-                phone=phone,
+                phone='+1'+phone.replace('-', ''),
                 msg_txt=msg_txt,
-                frequency=frequency,
-                time=time,
+                frequency=frequency.lower(),
+                time=datetime.now(pytz.timezone(timezone)).replace(hour=int(user_time[:2]), minute=int(user_time[3:5]), second=00).astimezone(pytz.utc).strftime('%H:%M'),
                 timezone=timezone,
-                active=active
+                active=True
             )
-
             db.session.add(new_job)
             db.session.commit()
-            return redirect(url_for('main.user'))
+            return redirect(url_for('main.user_page'))
 
-    return render_template('main/setup.html', user=user, tz_list=tz_list)
+    return render_template('main/setup.html', user=user, tz_list=tz_list, msg_lst=msg_lst)

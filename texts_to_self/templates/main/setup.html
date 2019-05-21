@@ -6,40 +6,36 @@
 {% endblock %}
 
 {% block content %}
-   <form method="POST">
-       <label for="telNo">Phone number:</label>
-       <input id="telNo" name="telNo" type="tel" size="20" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
-       <span> 321-654-8790</span>
-       <label for="msg_txt">Message Text</label>
-       <select id = "msg_txt">
-            {% for item in ['What was your level of anxiety today? [1-10]',
-           'What was your level of depression today? [1-10]',' What level were you at today? [1-10'] %}
-        <option value = "{{ request.form['msg_txt'] }}" > {{item}}  </option>
-        {% endfor %}
-            </select>
+   <form method="post">
+       <label for="phone">Mobile Number:</label>
+       <input id="phone" name="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+       <span> format: 321-654-8790</span><br>
 
        <label for="frequency">Frequency</label>
-       <select id = "frequency">
+       <select id = "frequency" name="frequency" value="{{ request.form['frequency'] }}" required>
             {% for item in ['Daily'] %}
-        <option value = "{{ request.form['frequency'] }}"> {{item}}  </option>
+        <option> {{item}}  </option>
         {% endfor %}
             </select>
 
-       <label for="time">Time</label>
-       <select id = "time">
-            {% for item in ['AM','PM'] %}
-                {% for hr in range(1,13) %}
-        <option value = "{{ request.form['time'] }}"> {{hr}} {{item}}  </option>
-        {% endfor %}
-           {% endfor %}
-       </select>
+        <label for="user_time">Time </label>
+        <input id="user_time" type="time" step="1800" name="user_time" required>
+
 
        <label for="timezone">Timezone</label>
-       <select id = "timezone">
+       <select id="timezone" name="timezone" value="{{ request.form['timezone'] }}" required>
             {% for item in tz_list %}
-        <option value = "{{ request.form['timezone'] }}"> {{item}}  </option>
+        <option> {{item}}  </option>
         {% endfor %}
-            </select>
+       </select><br>
+
+       <label for="msg_txt">Prompt</label>
+       <select id="msg_txt" name="msg_txt" value = "{{ request.form['msg_txt'] }}" required>
+            {% for msg in msg_lst %}
+        <option> {{msg}}  </option>
+        {% endfor %}
+       </select><br>
+
        <input type="submit" value="Save">
    </form>
 {% endblock %}
