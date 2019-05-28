@@ -7,17 +7,18 @@
 
   {% if job %}
 
-  <h3>Active Job:</h3>
+  <h3>Job Settings:</h3>
 
 
     <ul>
 
-     <li> Runs <b>{{ job.frequency.title() }} </b> at <b> {{ local_job_time }} </b>  <a href="{{  url_for('main.setup') }}">Update</a></li>
+     <li> <b>{{ job.frequency.title() }} </b> @ <b> {{ local_job_time }} </b> -  {% if job.active %} <b><font color="green"> Active</b> </font> {% else %} <b> <font color="red" > Inactive</b> </font> {% endif %}
+         <a href="{{  url_for('main.update', id=job['id']) }}">[update]</a></li>
     </ul>
 
 {% else %}
 
- <h3>Active Job:</h3> <li> <a href="{{  url_for('main.setup') }}">Setup</a></li>
+ <h3>Job Settings:</h3> <li> <a href="{{  url_for('main.setup') }}">Setup</a></li>
 
   {% endif %}
 
