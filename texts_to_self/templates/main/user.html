@@ -12,7 +12,7 @@
 
     <ul>
 
-     <li> Runs <b>{{ job.frequency }} </b> at <b> {{ job.time }} </b>  <a href="{{  url_for('main.setup') }}">Update</a> </li>
+     <li> Runs <b>{{ job.frequency.title() }} </b> at <b> {{ local_job_time }} </b>  <a href="{{  url_for('main.setup') }}">Update</a></li>
     </ul>
 
 {% else %}
@@ -85,5 +85,7 @@
     {% endfor %}
 
   {% endif %}
+
+utc_now {{ current_time_utc }}
 
 {% endblock %}

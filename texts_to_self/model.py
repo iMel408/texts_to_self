@@ -31,8 +31,8 @@ class Job(db.Model):
     phone = db.Column(db.String(20), unique=True, nullable=True)
     msg_txt = db.Column(db.String(160))
     frequency = db.Column(db.String, default='daily')
-    time = db.Column(db.String(2), default='12')
-    timezone = db.Column(db.String, default="America/Los_Angeles")
+    time = db.Column(db.String(5), default='12:00')
+    timezone = db.Column(db.String, default='America/Los_Angeles')
     created = db.Column(db.DateTime(), default=datetime.utcnow)
     updated = db.Column(db.DateTime(), default=datetime.utcnow)
 
@@ -46,6 +46,9 @@ class Event(db.Model):
     """ run and log an instance of a job """
 
     __tablename__ = 'events'
+    __table_args__ = (
+        db.UniqueConstraint('job_id', 'date_added', name='unique_job_event_event'),
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     msg_sid = db.Column(db.String(256))
@@ -54,7 +57,7 @@ class Event(db.Model):
     msg_type = db.Column(db.String(20))
     msg_body = db.Column(db.String(256), nullable=True)
     msg_status = db.Column(db.String(20), nullable=True)
-    date_added = db.Column(db.Date(), default=datetime.now)
+    date_added = db.Column(db.Date(), default=datetime.utcnow)
     date_updated = db.Column(db.DateTime(), default=datetime.utcnow)
 
     job = db.relationship('Job', backref=db.backref('events'), lazy='joined')
@@ -70,3 +73,11 @@ def connect_to_db(app):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
     db.app = app
+
+if __name__ == "__main__":
+    from app import app
+
+    connect_to_db(app)
+    print("Connected to DB.")
+
+    db.create_all()

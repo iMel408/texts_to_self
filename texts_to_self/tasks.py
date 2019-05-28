@@ -3,14 +3,6 @@ from texts_to_self.twilio_routes import *
 from texts_to_self.model import *
 from datetime import datetime
 
-#
-# @celery.shared_task()
-# def sleep(message, seconds=1):
-#     import time
-#     time.sleep(seconds)
-#     print(message)
-#     return seconds
-
 @celery.task()
 def run_jobs():
     """send sms messages due for current hour"""
@@ -18,10 +10,10 @@ def run_jobs():
     with app.app_context():
         db.init_app(app)
 
-    now = datetime.now()
+    now = datetime.utcnow()
     print("Current Hour:", now.hour)
     jobs_due = Job.query.filter_by(
-        time=str(now.hour) + ':00').all()  # TODO filter out inactive after testing is done
+        time=str(now.hour) + ':00').all()
 
     # jobs_due = session.query(Job).filter_by(time=str(now.hour)+':00').options(joinedload('*')).all()
 

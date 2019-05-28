@@ -5,8 +5,8 @@ from datetime import timedelta
 broker_url = 'redis://localhost:6379'
 result_backend = 'redis://localhost:6379'
 beat_schedule = {
-    'run_every_hour': {
+    'run_every_15min': {
         'task': 'texts_to_self.tasks.run_jobs',
-        'schedule': timedelta(seconds=60)
+        'schedule': timedelta(seconds=900)
     },
 }

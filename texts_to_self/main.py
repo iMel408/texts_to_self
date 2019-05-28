@@ -1,5 +1,5 @@
 import pytz
-import datetime
+from datetime import datetime
 from flask import Blueprint, flash, request, render_template, g, redirect, url_for
 from texts_to_self.auth import login_required
 
@@ -18,8 +18,16 @@ def user_page():
     """show user page/info. before_app_request is checking on g.user"""
     user = g.user
     active_job = Job.query.filter_by(user=user, active=True).first()
+    current_time_utc = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 
     if active_job:
+
+        local_job_time = datetime.now(pytz.utc).replace(hour=int(active_job.time[:2]), minute=int(active_job.time[3:5]),
+                                                        second=00).astimezone(pytz.timezone(active_job.timezone)).strftime("%I:%M %p %Z")
+
+        print("utc:", current_time_utc)
+        print("user:", local_job_time)
+        print("user_time:", active_job.time)
 
         events = Event.query.filter_by(job_id=active_job.id, msg_type='inbound').order_by(Event.date_added).all()
 
@@ -37,9 +45,12 @@ def user_page():
                                title='Daily Levels',
                                max=10,
                                labels=line_labels,
-                               values=line_values)
+                               values=line_values,
+                               current_time_utc=current_time_utc,
+                               local_job_time=local_job_time)
 
-    return render_template('main/user.html', user=user)
+
+    return render_template('main/user.html', user=user, current_time_utc=current_time_utc)
 
 
 @bp.route('/setup', methods=('GET', 'POST'))
@@ -48,9 +59,9 @@ def setup():
 
     user = g.user
 
-    tz_list = pytz.country_timezones('us')
-    # tz_list = ['US/Pacific', 'US/Central', 'US/Eastern', 'US/Mountain', 'US/Hawaii', 'US/Alaska', 'US/Arizona',
-    #            'US/East-Indiana', 'US/Indiana-Starke', 'US/Michigan']
+    # tz_list = pytz.country_timezones('us')
+    tz_list = ['US/Pacific', 'US/Central', 'US/Eastern', 'US/Mountain', 'US/Hawaii', 'US/Alaska', 'US/Arizona',
+               'US/East-Indiana', 'US/Indiana-Starke', 'US/Michigan']
 
     msg_lst = ['What was your level of anxiety today? (1-10)',
                'What was your level of depression today? (1-10)',
