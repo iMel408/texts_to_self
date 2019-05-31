@@ -4,8 +4,6 @@ from flask import Blueprint, flash, request, render_template, g, redirect, url_f
 from texts_to_self.auth import login_required
 
 
-
-
 from texts_to_self.model import *
 
 bp = Blueprint('main', __name__)
