@@ -1,1 +1,1 @@
-web: gunicorn textstoself.wsgi --log-file -
+web: gunicorn texts_to_self.wsgi --log-file -
