@@ -1,1 +1,1 @@
-web: gunicorn texts-to-self:app
+web: gunicorn app:app
