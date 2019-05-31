@@ -69,7 +69,8 @@ class Event(db.Model):
 def connect_to_db(app):
     """Connect the database to app."""
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///textstoself'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///textstoself'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql-triangular-57469'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
     db.app = app
