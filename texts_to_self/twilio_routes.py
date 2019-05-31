@@ -1,3 +1,4 @@
+import os
 from . import create_app
 from flask import request
 from twilio.rest import Client
@@ -6,11 +7,11 @@ from texts_to_self.model import *
 
 app = create_app()
 
-CLIENT = Client(app.config['TWILIO_ACCOUNT_SID'], app.config['TWILIO_AUTH_TOKEN'])
+CLIENT = Client(os.environ['TWILIO_ACCOUNT_SID'], os.environ['TWILIO_AUTH_TOKEN'])
 
 
 @app.route('/outgoing', methods=['GET', 'POST'])
-def send_sms(to, body, job_id, from_=app.config['FROM_PHONE']):
+def send_sms(to, body, job_id, from_=os.environ['FROM_PHONE']):
     """create sms event"""
 
     message = CLIENT.messages.create(
