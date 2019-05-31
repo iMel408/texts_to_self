@@ -1,3 +1,4 @@
+import datetime
 from flask import Flask, request
 from celery import Celery
 from texts_to_self.model import *
@@ -51,16 +52,28 @@ def create_app():
         msg_body = request.values.get('Body')
         msg_status = request.values.get('SmsStatus')
 
-        new_reply = Event(
-            msg_type=msg_type,
-            job_id=job_id,
-            msg_sid=msg_sid,
-            user_phone=user_phone,
-            msg_body=msg_body,
-            msg_status=msg_status
-        )
+        existing_entry = Event.query.filter_by(job_id = job.id, date_added=datetime.utcnow().strftime("%Y-%m-%d")).first()
 
-        db.session.add(new_reply)
+        print("existing_entry:", existing_entry)
+
+        if not existing_entry:
+
+            new_reply = Event(
+                msg_type=msg_type,
+                job_id=job_id,
+                msg_sid=msg_sid,
+                user_phone=user_phone,
+                msg_body=msg_body,
+                msg_status=msg_status
+            )
+            db.session.add(new_reply)
+            db.session.commit()
+
+        else:
+            existing_entry.msg_sid=msg_sid
+            existing_entry.msg_body=msg_body
+            existing_entry.date_updated=datetime.utcnow()
+
         db.session.commit()
 
         resp = MessagingResponse()
