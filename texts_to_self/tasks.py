@@ -1,5 +1,5 @@
 import celery
-from texts_to_self.twilio_routes import *
+from texts_to_self.twilio import *
 from texts_to_self.model import *
 from datetime import datetime
 

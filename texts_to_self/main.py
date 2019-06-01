@@ -7,7 +7,7 @@ from texts_to_self.model import *
 
 bp = Blueprint('main', __name__)
 
-# @bp.route('/user/<int:id>')
+
 @bp.route('/')
 @login_required
 def user_page():
