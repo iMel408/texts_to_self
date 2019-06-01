@@ -7,8 +7,8 @@ from datetime import datetime
 def run_jobs():
     """send sms messages due for current hour"""
 
-    with app.app_context():
-        db.init_app(app)
+    # with app.app_context():
+    #     db.init_app(app)
 
     now = datetime.utcnow()
     print("Current Hour:", now.hour)

@@ -45,7 +45,6 @@ def user_page():
                                current_time_utc=current_time_utc,
                                local_job_time=local_job_time)
 
-
     return render_template('main/user.html', user=user, current_time_utc=current_time_utc)
 
 
@@ -62,7 +61,6 @@ def setup():
     msg_lst = ['What was your level of anxiety today? (1-10)',
                'What was your level of depression today? (1-10)',
                'What level were you at today? (1-10)']
-
 
     if request.method == 'POST':
         print(request.form)
@@ -81,7 +79,6 @@ def setup():
             active = True
         else:
             active = False
-
 
         if not user_time:
             error = 'Time is Required!'
@@ -103,7 +100,6 @@ def setup():
             return redirect(url_for('main.user_page'))
 
     return render_template('main/setup.html', user=user, tz_list=tz_list, msg_lst=msg_lst)
-
 
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
@@ -139,12 +135,12 @@ def update(id):
             flash(error)
         else:
             update_job = Job.query.get(id)
-            update_job.user_id=user.id
-            update_job.phone='+1'+phone.replace('-', '')
-            update_job.msg_txt=msg_txt
-            update_job.frequency=frequency.lower()
-            update_job.time=datetime.now(pytz.timezone(timezone)).replace(hour=int(user_time[:2]), minute=int(user_time[3:5]), second=00).astimezone(pytz.utc).strftime('%H:%M')
-            update_job.timezone=timezone
+            update_job.user_id = user.id
+            update_job.phone = '+1'+phone.replace('-', '')
+            update_job.msg_txt = msg_txt
+            update_job.frequency = frequency.lower()
+            update_job.time = datetime.now(pytz.timezone(timezone)).replace(hour=int(user_time[:2]), minute=int(user_time[3:5]), second=00).astimezone(pytz.utc).strftime('%H:%M')
+            update_job.timezone = timezone
 
             if active == 'Yes':
                 update_job.active = True
@@ -155,4 +151,3 @@ def update(id):
             return redirect(url_for('main.user_page'))
 
     return render_template('main/update.html', user=user, tz_list=tz_list, msg_lst=msg_lst, job_id=job_id)
-

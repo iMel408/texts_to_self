@@ -7,8 +7,8 @@ bp = Blueprint('twilio', __name__)
 
 CLIENT = Client(os.environ['TWILIO_ACCOUNT_SID'], os.environ['TWILIO_AUTH_TOKEN'])
 
+
 @bp.route('/outgoing', methods=['GET', 'POST'])
-# @app.route('/outgoing', methods=['GET', 'POST'])
 def send_sms(to, body, job_id, from_=os.environ['FROM_PHONE']):
     """create sms event"""
 
@@ -23,7 +23,7 @@ def send_sms(to, body, job_id, from_=os.environ['FROM_PHONE']):
     msg_sid = message.sid
     user_phone = message.to
     body = message.body
-    msg_body = body.replace('Sent from your Twilio trial account - ', '')
+    msg_body = body
     msg_status = message.status
 
     new_event = Event(
@@ -39,9 +39,8 @@ def send_sms(to, body, job_id, from_=os.environ['FROM_PHONE']):
 
 
 @bp.route('/incoming', methods=['GET', 'POST'])
-# @app.route("/incoming", methods=['GET', 'POST'])
 def receive_reply():
-    """Respond to incoming messages with a friendly SMS."""
+    """Respond to incoming messages."""
 
     job = Job.query.filter_by(phone=request.values.get('From')).first()
 
