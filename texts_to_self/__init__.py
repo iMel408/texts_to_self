@@ -23,7 +23,9 @@ def make_celery(app):
 
 def create_app():
     app = Flask(__name__)
+
     # app.config.from_object('texts_to_self.config')
+
     app.secret_key = os.environ['SECRET_KEY']
 
     # @app.route('/')
