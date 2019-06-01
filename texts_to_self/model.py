@@ -48,7 +48,7 @@ class Event(db.Model):
 
     __tablename__ = 'events'
     # __table_args__ = (
-    #     db.UniqueConstraint('job_id', 'date_added', name='unique_job_event_event'),
+    #     q('job_id', 'date_added', name='unique_job_event_event'),
     # )
 
     id = db.Column(db.Integer, primary_key=True)
