@@ -47,9 +47,9 @@ class Event(db.Model):
     """ run and log an instance of a job """
 
     __tablename__ = 'events'
-    __table_args__ = (
-        db.UniqueConstraint('job_id', 'date_added', name='unique_job_event_event'),
-    )
+    # __table_args__ = (
+    #     db.UniqueConstraint('job_id', 'date_added', name='unique_job_event_event'),
+    # )
 
     id = db.Column(db.Integer, primary_key=True)
     msg_sid = db.Column(db.String(256))
