@@ -58,6 +58,7 @@ class Event(db.Model):
     msg_type = db.Column(db.String(20))
     msg_body = db.Column(db.String(256), nullable=True)
     msg_status = db.Column(db.String(20), nullable=True)
+    comment = db.Column(db.String(75), nullable=True)
     date_added = db.Column(db.Date(), default=datetime.utcnow)
     date_updated = db.Column(db.DateTime(), default=datetime.utcnow)
 

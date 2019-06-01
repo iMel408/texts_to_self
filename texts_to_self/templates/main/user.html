@@ -81,8 +81,12 @@
     {% for event in events %}
 
     <ul>
-      <li>Date:<b>{{ event.date_added }} </b> Value: <b> {{ event.msg_body }} </b> </li>
+      <li><b>{{ event.date_added }} </b> : <b> {{ event.msg_body }} </b>
+          {% if event.comment %} '<b> {{ event.comment }} </b>' </li>
+        {% else %}
+        <li> <a href="{{  url_for('main.setup') }}">Add Comment</a></li> </li>
     </ul>
+  {% endif %}
     {% endfor %}
 
   {% endif %}

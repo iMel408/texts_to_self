@@ -7,7 +7,6 @@ from texts_to_self.model import *
 
 bp = Blueprint('main', __name__)
 
-
 # @bp.route('/user/<int:id>')
 @bp.route('/')
 @login_required
@@ -19,7 +18,7 @@ def user_page():
 
     if user_job:
 
-        local_job_time = datetime.now(pytz.utc).replace(hour=int(user_job.time[:1]), minute=int(user_job.time[2:4]),
+        local_job_time = datetime.now(pytz.utc).replace(hour=int(user_job.time[:2]), minute=int(user_job.time[3:4]),
                                                         second=00).astimezone(pytz.timezone(user_job.timezone)).strftime("%I:%M %p %Z")
 
         print("utc:", current_time_utc)
