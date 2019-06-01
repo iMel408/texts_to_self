@@ -88,5 +88,6 @@ def create_app():
     from . import tasks
 
     app.celery = make_celery(app)
+
     return app
 
