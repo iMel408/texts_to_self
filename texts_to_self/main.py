@@ -3,7 +3,6 @@ import datetime
 from flask import Blueprint, flash, request, render_template, g, redirect, url_for
 from texts_to_self.auth import login_required
 
-
 from texts_to_self.model import *
 
 bp = Blueprint('main', __name__)
@@ -20,7 +19,7 @@ def user_page():
 
     if user_job:
 
-        local_job_time = datetime.now(pytz.utc).replace(hour=user_job.time[:2], minute=user_job.time[3:5],
+        local_job_time = datetime.now(pytz.utc).replace(hour=int(user_job.time[:2]), minute=int(user_job.time[3:5]),
                                                         second=00).astimezone(pytz.timezone(user_job.timezone)).strftime("%I:%M %p %Z")
 
         print("utc:", current_time_utc)
