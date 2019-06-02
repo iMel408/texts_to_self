@@ -2,44 +2,48 @@
 
 {% block header %}
 
-   <h1>{% block title %}Reminder Setup{% endblock %}</h1>
+   <h1>{% block title %}Reminder Settings{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
    <form method="post">
        <label for="phone">Mobile Number:</label>
-       <input id="phone" name="phone" type="tel" value="{{ job_id['phone'] }}" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+       <input id="phone" name="phone" type="tel" value="{{ job_id.phone[2:5] + '-' + job_id.phone[5:8] + '-' + job_id.phone[8:] }}" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
        <span> format: 321-654-8790</span><br>
 
        <label for="frequency">Frequency</label>
-       <select id = "frequency" name="frequency" value="{{ request.form['frequency'] or job_id['frequency'] }}" required>
-            {% for item in ['Daily','Weekly'] %}
-        <option> {{item}}  </option>
+       <select id = "frequency" name="frequency" value="{{ request.form['frequency'] }}" required>
+            {% for item in ['Daily'] %}
+       <option {{ "selected" if item == job_id.frequency else '' }} > {{item}}  </option>
         {% endfor %}
             </select>
 
         <label for="user_time">Time </label>
-        <input id="user_time" type="time" step="1800" name="user_time" value="{{ job_id['user_time'] }}" required>
+        <input id="user_time" type="time" step="1800" name="user_time" value="{{ local_job_time[:5]}}" required>
 
 
        <label for="timezone">Timezone</label>
-       <select id="timezone" name="timezone" value="{{ request.form['timezone'] or job_id['timezone'] }}" required>
+       <select id="timezone" name="timezone" value="{{ request.form['timezone'] }}"  required>
             {% for item in tz_list %}
-        <option> {{item}}  </option>
+        <option {{ "selected" if item == job_id.timezone else '' }} > {{item}}  </option>
         {% endfor %}
        </select><br>
 
        <label for="msg_txt">Prompt</label>
-       <select id="msg_txt" name="msg_txt" value = "{{ request.form['msg_txt'] or job_id['msg_txt'] }}" required>
+       <select id="msg_txt" name="msg_txt" value = "{{ request.form['msg_txt'] }}" required>
             {% for msg in msg_lst %}
-        <option> {{msg}}  </option>
+        <option {{ "selected" if msg == job_id.msg_txt else '' }} > {{msg}}    </option>
         {% endfor %}
        </select>
 
        <label for="active">Active</label>
-       <select id="active" name="active" value = "{{ request.form['active'] or job_id['active'] }}" required>
+       <select id="active" name="active" value = "{{ request.form['active'] }}" required>
             {% for item in ['Yes','No'] %}
-        <option> {{item}}  </option>
+                {% if job_id.active %}
+       <option selected="Yes"> {{item}}  </option>
+           {% else %}
+           <option selected="No"> {{item}}  </option>
+           {% endif %}
         {% endfor %}
        </select><br>
 

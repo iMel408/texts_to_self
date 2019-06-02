@@ -97,6 +97,7 @@ def setup():
             )
             db.session.add(new_job)
             db.session.commit()
+            flash('Setup Completed')
             return redirect(url_for('main.user_page'))
 
     return render_template('main/setup.html', user=user, tz_list=tz_list, msg_lst=msg_lst)
@@ -107,8 +108,8 @@ def setup():
 def update(id):
 
     user = g.user
-    # job_id = Job.query.get(id)
-    job_id = id
+    job_id = Job.query.get(id)
+    # job_id = id
     print(job_id)
 
     tz_list = ['US/Pacific', 'US/Central', 'US/Eastern', 'US/Mountain', 'US/Hawaii', 'US/Alaska', 'US/Arizona',
@@ -117,6 +118,11 @@ def update(id):
     msg_lst = ['What was your level of anxiety today? (1-10)',
                'What was your level of depression today? (1-10)',
                'What level were you at today? (1-10)']
+
+    local_job_time = datetime.now(pytz.utc).replace(hour=int(job_id.time[:2]), minute=int(job_id.time[3:4]),
+                                                    second=00).astimezone(pytz.timezone(job_id.timezone)).strftime(
+        "%I:%M %p")
+    print("local_job_time:", local_job_time)
 
     if request.method == 'POST':
 
@@ -148,6 +154,7 @@ def update(id):
                 update_job.active = False
 
             db.session.commit()
+            flash('Settings Updated')
             return redirect(url_for('main.user_page'))
 
-    return render_template('main/update.html', user=user, tz_list=tz_list, msg_lst=msg_lst, job_id=job_id)
+    return render_template('main/update.html', user=user, tz_list=tz_list, msg_lst=msg_lst, local_job_time=local_job_time, job_id=job_id)

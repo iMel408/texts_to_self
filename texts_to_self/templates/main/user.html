@@ -2,12 +2,12 @@
 {% block content %}
     <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
 
-  <h2>User Profile: {{ user.username }}</h2>
+  <h3>Profile: {{ user.username }}</h3>
 
 
   {% if job %}
 
-  <h3>Job Settings:</h3>
+  <h4>Job Settings:</h4>
 
 
     <ul>
@@ -18,7 +18,7 @@
 
 {% else %}
 
- <h3>Job Settings:</h3> <li> <a href="{{  url_for('main.setup') }}">Setup</a></li>
+ <h4>Job Settings:</h4> <li> <a href="{{  url_for('main.setup') }}">Setup</a></li>
 
   {% endif %}
 
@@ -77,14 +77,13 @@
 
 
     <h3>Log:</h3>
-
+    <a href="{{  url_for('main.setup') }}">Add/Edit Comment</a>
     {% for event in events %}
 
     <ul>
       <li><b>{{ event.date_added }} </b> : <b> {{ event.msg_body }} </b>
-          {% if event.comment %} '<b> {{ event.comment }} </b>' </li>
-        {% else %}
-        <li> <a href="{{  url_for('main.setup') }}">Add Comment</a></li> </li>
+          {% if event.comment %} '{{ event.comment }}'
+        {% else %} </li>
     </ul>
   {% endif %}
     {% endfor %}
