@@ -76,15 +76,12 @@
     </script>
 
 
-    <h3>Log:</h3>
-    <a href="{{  url_for('main.setup') }}">Add/Edit Comment</a>
-    {% for event in events %}
+    <h3>Log:</h3><a href="{{  url_for('main.setup') }}">Edit</a>
+     {% for event in events %}
 
-    <ul>
-      <li><b>{{ event.date_added }} </b> : <b> {{ event.msg_body }} </b>
-          {% if event.comment %} '{{ event.comment }}'
-        {% else %} </li>
-    </ul>
+        <li>{{ event.date_added.strftime("%m-%d-%y") }} : {{ event.msg_body }}
+            {% if event.comment %}
+            <font color="#00008b"><i> - {{ event.comment }}</font></i> </li> </h4>
   {% endif %}
     {% endfor %}
 

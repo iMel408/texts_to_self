@@ -31,7 +31,7 @@ def user_page():
         line_values = []
 
         for event in events:
-            line_labels.append(event.date_added)
+            line_labels.append(event.date_added.strftime("%m-%d-%y"))
             line_values.append(event.msg_body)
 
         return render_template('main/user.html',
