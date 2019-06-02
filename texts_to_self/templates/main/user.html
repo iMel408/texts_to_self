@@ -76,15 +76,17 @@
     </script>
 
 
-    <h3>Log:</h3><a href="{{  url_for('main.setup') }}">Edit</a>
+    <h3>Log:</h3> <a href="{{  url_for('main.setup') }}">Edit</a>
+<ul><h4>
      {% for event in events %}
 
         <li>{{ event.date_added.strftime("%m-%d-%y") }} : {{ event.msg_body }}
             {% if event.comment %}
             <font color="#00008b"><i> - {{ event.comment }}</font></i> </li> </h4>
+
   {% endif %}
     {% endfor %}
-
+</ul>
   {% endif %}
 
 <!--utc_now {{ current_time_utc }}-->
