@@ -34,10 +34,11 @@ def create_app():
     connect_to_db(app)
     db.init_app(app)
 
-    from . import main, auth, twilio
+    from . import main, auth, twilio, charts
 
     app.register_blueprint(auth.bp)
     app.register_blueprint(twilio.bp)
+    app.register_blueprint(charts.bp)
     app.register_blueprint(main.bp)
     app.add_url_rule('/', endpoint='user')
 
