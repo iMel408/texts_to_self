@@ -23,13 +23,8 @@
 
   {% if events %}
 
-<canvas id="myChart" width="900" height="400"></canvas>
+<canvas id="chart" width="900" height="400"></canvas>
 <script>
-
-var ctx = document.getElementById('myChart').getContext('2d');
-steps = 10;
-max = {{ max }};
-
 
 Chart.defaults.global.animationSteps = 50;
 Chart.defaults.global.tooltipYPadding = 16;
@@ -41,54 +36,67 @@ Chart.defaults.global.responsive = false;
 Chart.defaults.global.scaleLineColor = "black";
 Chart.defaults.global.scaleFontSize = 16;
 
-var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'line',
+let ctx = document.getElementById("chart").getContext("2d");
 
-    // The data for our dataset
-    data: {
-        labels: [{% for item in labels %}
-                "{{ item }}",
-                {% endfor %}],
-        datasets: [{
-            label: "{{ title }}",
-            fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            bezierCurve : false,
-            data: [{% for item in values %}
-                    {{ item[0] }},
-                {% endfor %}],
-        }]
-    },
-    // Configuration options go here
-    options: {
-        tooltips: {
-            enabled: true,
-            mode: 'single',
-            callbacks: {
-                label: function(tooltipItems) {
-                    return tooltipItems.yLabel + {% for item in values %}
-                    {% if item[1] %}
-                    " {{ item[1] }}"
-                    {% endif %}
-                {% endfor %};
-            }
-          }
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
+/*** Gradient ***/
+let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(250,174,50,1)');
+    gradient.addColorStop(1, 'rgba(250,174,50,0)');
+/***************/
+
+let data = {
+            labels : [{% for item in labels %}
+                        "{{ item }}",
+                        {% endfor %}],
+            datasets: [
+                {
+                    label: "{{ title }}",
+                    fillColor : gradient,
+                    strokeColor : "#ff6c23",
+                    pointColor : "#fff",
+                    pointStrokeColor : "#ff6c23",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "#ff6c23",
+                    data : [{% for item in values %}
+                        {{ item[0] }},
+                        {% endfor %}]
                 }
-            }]
-        }
-    }
-});
+            ]
+        };
 
+        let options = {
+            responsive: true,
+            datasetStrokeWidth : 3,
+            pointDotStrokeWidth : 4,
+            tooltipFillColor: "rgba(0,0,0,0.8)",
+            tooltipFontStyle: "bold",
+            tooltips: {
+                enabled: true,
+                mode: 'single',
+                callbacks: {
+                    label: function(tooltipItems, values) {
+                        return tooltipItems.yLabel + {% for items in values %}
+                        {% if items[1] %}
+                        " {{ items[1] }}"
+                        {% endif %}
+                    {% endfor %};
+                    }
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+      };
+
+    let myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: options
+    });
 </script>
 
     <h3>Log:</h3><a href="{{  url_for('main.setup') }}">Edit</a>
