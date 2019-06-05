@@ -1,28 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <h3>Profile: {{ user.username }}</h3>
-
+<h3>Profile Name:</h3> <ul> <b>{{ user.username }} </b></ul>
 
   {% if job %}
 
-  <h4>Job Settings:</h4>
+  <h3>Job Settings:</h3>
 
 
     <ul>
 
-     <li> <b>{{ job.frequency.title() }} </b> @ <b> {{ local_job_time }} </b> -  {% if job.active %} <b><font color="green"> Active</b> </font> {% else %} <b> <font color="red" > Inactive</b> </font> {% endif %}
+     <li> <b>{{ job.frequency.title() }} </b> @ <b> {{ local_job_time }} </b> -  {% if job.active %} <b><font color="#13a864"> Active</b> </font> {% else %} <b> <font color="#ff6c23" > Inactive</b> </font> {% endif %}
          <a href="{{  url_for('main.update', id=job['id']) }}">[update]</a></li>
     </ul>
 
 {% else %}
 
- <h4>Job Settings:</h4> <li> <a href="{{  url_for('main.setup') }}">Setup</a></li>
+ <h4>Job Settings:</h4> <li> Create your first prompt - <a href="{{  url_for('main.setup') }}">Setup</a> </li>
 
   {% endif %}
 
   {% if events %}
 
+<div class="chartdiv">
 <canvas id="myChart" width="900" height="400"></canvas>
 <script>
 
@@ -44,29 +44,25 @@ let chart = new Chart(ctx, {
                 {% endfor %}],
         datasets: [{
             label: "{{ title }}",
-            fillColor: gradient,
-            strokeColor: "#ff6c23",
-            pointColor: "#fff",
-            pointStrokeColor: "#ff6c23",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "#ff6c23",
+            backgroundColor: gradient,
+            borderColor: '#ff6c23',
             data: [{% for item in values %}
                     {{ item }},
                 {% endfor %}],
         }]
     },
     // Configuration options go here
-    options: {
+      options: {
         responsive: true,
-        datasetStrokeWidth : 3,
-        pointDotStrokeWidth : 4,
-        tooltipFillColor: "rgba(0,0,0,0.8)",
-        tooltipFontStyle: "bold",
+        datasetStrokeWidth: 3,
+        pointDotStrokeWidth: 4,
+        tooltipFillColor: 'rgba(255,0,0,0.8)',
+        tooltipFontStyle: 'bold',
         tooltips: {
-            enabled: true,
-            mode: 'single',
-            callbacks: {
-                label: function(tooltipItems, comments) {
+          enabled: true,
+          mode: 'single',
+          callbacks: {
+            label: function(tooltipItems, comments) {
                     {% for item in comments %}
                                    {% if item is not none %}
                     return tooltipItems.yLabel +
@@ -77,23 +73,25 @@ let chart = new Chart(ctx, {
           }
         },
         scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true
+              }
+            }
+          ]
         }
-    }
-});
+      }
+    });
 
 </script>
-
+</div>
     <h3>Log:</h3><a href="{{  url_for('main.setup') }}">Edit</a>
      {% for event in events %}
 
         <li>{{ event.date_added.strftime("%m-%d-%y") }} : {{ event.msg_body }}
             {% if event.comment %}
-            <font color="#00008b"><i> - {{ event.comment }}</font></i> </li> </h4>
+            <i> - {{ event.comment }}</i> </li> </h4>
   {% endif %}
     {% endfor %}
 

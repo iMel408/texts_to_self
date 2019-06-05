@@ -1,23 +1,29 @@
 html {
-  font-family: 'Ubuntu', sans-serif;
-  background: #eee;
-  padding: 1rem;
+  font-family: 'Josefin Sans', sans-serif;
+  background: lightgray;
+  padding: .5rem;
 }
 
 body {
   max-width: 960px;
   margin: 0 auto;
-  background: white;
+  background: #f1ffff;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Ubuntu', sans-serif;
-  color: #377ba8;
+h1 {
+  font-family: 'Kaushan Script', cursive;
+  color: #0e0e0b;
+  margin: 1rem 0;
+}
+
+h2, h3, h4, h5, h6 {
+  font-family: 'Josefin Sans', sans-serif;
+  color: #2799a8;
   margin: 1rem 0;
 }
 
 a {
-  color: #377ba8;
+  color: #2799a8;
 }
 
 hr {
@@ -26,19 +32,24 @@ hr {
 }
 
 nav {
-  background: lightgray;
+  background: #fbbf5d;
   display: flex;
   align-items: center;
-  padding: 0 0.5rem;
+  padding: 0 0rem;
 }
 
 nav h1 {
+  font-family: 'Kaushan Script', cursive;
+  color: #0e0e0b;
+  margin: 0rem 0;
   flex: auto;
   margin: 0;
+  font-size:xx-large;
+
 }
 
 nav h1 a {
-  text-decoration: none;
+  text-decoration: underline;
   padding: 0.25rem 0.5rem;
 }
 
@@ -72,8 +83,8 @@ nav ul li a, nav ul li span, header .action {
 .flash {
   margin: 1em 0;
   padding: 1em;
-  background: #cae6f6;
-  border: 1px solid #377ba8;
+  background: rgba(250,174,50,1);
+  border: 2px solid #2799a8;
 }
 
 .content:last-child {
@@ -109,19 +120,6 @@ nav ul li a, nav ul li span, header .action {
   font-size: 0.70em;
 }
 
-/*.content chart {*/
-/*  width: 90%;*/
-/*  margin-left: auto;*/
-/*  margin-right: auto;*/
-/*}*/
-
-/*.content chart-legend li span {*/
-/*  display: inline-block;*/
-/*  width: 12px;*/
-/*  height: 12px;*/
-/*  margin-right: 5px;*/
-/*}*/
-
 input.danger {
   color: #cc2f2e;
 }
@@ -129,4 +127,14 @@ input.danger {
 input[type=submit] {
   align-self: start;
   min-width: 10em;
+}
+
+.chartdiv {
+  width: 900px;
+  height: 400px;
+}
+
+.chartdiv canvas {
+  max-width: 100%;
+  max-height: 100%;
 }
