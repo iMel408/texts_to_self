@@ -26,25 +26,17 @@
 <canvas id="myChart" width="900" height="400"></canvas>
 <script>
 
-var ctx = document.getElementById('myChart').getContext('2d');
+let ctx = document.getElementById('myChart').getContext('2d');
 steps = 10;
 max = {{ max }};
+/*** Gradient ***/
+let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(250,174,50,1)');
+    gradient.addColorStop(1, 'rgba(250,174,50,0)');
 
-
-Chart.defaults.global.animationSteps = 50;
-Chart.defaults.global.tooltipYPadding = 16;
-Chart.defaults.global.tooltipCornerRadius = 0;
-Chart.defaults.global.tooltipTitleFontStyle = "normal";
-Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
-Chart.defaults.global.animationEasing = "easeOutBounce";
-Chart.defaults.global.responsive = false;
-Chart.defaults.global.scaleLineColor = "black";
-Chart.defaults.global.scaleFontSize = 16;
-
-var chart = new Chart(ctx, {
+let chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'line',
-
     // The data for our dataset
     data: {
         labels: [{% for item in labels %}
@@ -52,13 +44,12 @@ var chart = new Chart(ctx, {
                 {% endfor %}],
         datasets: [{
             label: "{{ title }}",
-            fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#fff",
+            fillColor: gradient,
+            strokeColor: "#ff6c23",
+            pointColor: "#fff",
+            pointStrokeColor: "#ff6c23",
             pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            bezierCurve : false,
+            pointHighlightStroke: "#ff6c23",
             data: [{% for item in values %}
                     {{ item }},
                 {% endfor %}],
@@ -66,6 +57,11 @@ var chart = new Chart(ctx, {
     },
     // Configuration options go here
     options: {
+        responsive: true,
+        datasetStrokeWidth : 3,
+        pointDotStrokeWidth : 4,
+        tooltipFillColor: "rgba(0,0,0,0.8)",
+        tooltipFontStyle: "bold",
         tooltips: {
             enabled: true,
             mode: 'single',
