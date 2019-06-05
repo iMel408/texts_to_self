@@ -29,11 +29,12 @@ def user_page():
 
         line_labels = []
         line_values = []
+        line_comments = []
 
         for event in events:
             line_labels.append(event.date_added.strftime("%m-%d-%y"))
-            # line_values.append(event.msg_body)
-            line_values.append((event.msg_body, event.comment))
+            line_values.append(event.msg_body)
+            line_comments.append(event.comment)
 
         return render_template('main/user.html',
                                user=user,
@@ -43,6 +44,7 @@ def user_page():
                                max=10,
                                labels=line_labels,
                                values=line_values,
+                               comments=line_comments,
                                current_time_utc=current_time_utc,
                                local_job_time=local_job_time)
 
