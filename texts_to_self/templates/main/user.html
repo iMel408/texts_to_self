@@ -71,10 +71,10 @@ var chart = new Chart(ctx, {
             mode: 'single',
             callbacks: {
                 label: function(tooltipItems, comments) {
-
-                    return tooltipItems.yLabel + {% for item in comments %}
-                    {% if item is not none %}
-                    `{{comments}}`.split(',')[tooltipItems.index];
+                    {% for item in comments %}
+                                   {% if item is not none %}
+                    return tooltipItems.yLabel +
+                     '{{comments}}'.split(',')[tooltipItems.index].replace('&#39;','').replace('None',' ');
                     {% endif %}
                 {% endfor %};
             }
