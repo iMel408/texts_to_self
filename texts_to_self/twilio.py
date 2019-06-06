@@ -103,7 +103,7 @@ def verify_sms(to, body, job_id, from_=os.environ['FROM_PHONE']):
     msg_body = body
     msg_status = message.status
 
-    new_ = Event(
+    new_verification_ = Event(
         msg_type=msg_type,
         job_id=job_id,
         msg_sid=msg_sid,
@@ -112,4 +112,4 @@ def verify_sms(to, body, job_id, from_=os.environ['FROM_PHONE']):
         msg_status=msg_status
     )
 
-    db.session.add(new_event)
+    db.session.add(new_verification_)

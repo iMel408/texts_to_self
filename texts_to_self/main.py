@@ -2,6 +2,8 @@ import pytz
 import datetime
 from flask import Blueprint, flash, request, render_template, g, redirect, url_for
 from texts_to_self.auth import login_required
+from twilio.twiml.messaging_response import MessagingResponse
+
 
 from texts_to_self.model import *
 
@@ -103,6 +105,8 @@ def setup():
             )
             db.session.add(new_job)
             db.session.commit()
+            resp = MessagingResponse()
+            resp.message("Your account is now active.")
             flash('Setup Completed')
             return redirect(url_for('main.user_page'))
 
