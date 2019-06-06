@@ -8,6 +8,8 @@ body {
   max-width: 960px;
   margin: 0 auto;
   background: #f1ffff;
+  line-height: 1.4;
+  padding: 1em;
 }
 
 h1 {
@@ -44,13 +46,12 @@ nav h1 {
   margin: 0rem 0;
   flex: auto;
   margin: 0;
-  font-size:xx-large;
-
 }
 
 nav h1 a {
   text-decoration: underline;
   padding: 0.25rem 0.5rem;
+  font-size: 1.5em;
 }
 
 nav ul  {
@@ -63,6 +64,7 @@ nav ul  {
 nav ul li a, nav ul li span, header .action {
   display: block;
   padding: 0.5rem;
+  font-size: 1.2em;
 }
 
 .content {
@@ -73,6 +75,7 @@ nav ul li a, nav ul li span, header .action {
   border-bottom: 1px solid lightgray;
   display: flex;
   align-items: flex-end;
+
 }
 
 .content > header h1 {

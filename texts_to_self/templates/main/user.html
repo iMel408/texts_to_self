@@ -16,7 +16,7 @@
 
 {% else %}
 
- <h4>Job Settings:</h4> <li> Create your first prompt - <a href="{{  url_for('main.setup') }}">Setup</a> </li>
+ <h3>Job Settings:</h3> <li> Create your first prompt - <a href="{{  url_for('main.setup') }}">Setup</a> </li>
 
   {% endif %}
 
@@ -86,16 +86,16 @@ let chart = new Chart(ctx, {
 
 </script>
 </div>
-    <h3>Log:</h3><a href="{{  url_for('main.setup') }}">Edit</a>
-    <ul>  {% for event in events %}
+    <h3>Daily Logs:</h3><a href="{{  url_for('main.setup') }}">Edit</a>
+<ul>  {% for event in events %}
 
-       <li>{{ event.date_added.strftime("%m-%d-%y") }} : {{ event.msg_body }}
+   <li>{{ event.date_added.strftime("%m-%d-%y") }} : {{ event.msg_body }}
             {% if event.comment %}
             <i> - {{ event.comment }}</i> </li>
   {% endif %}
     {% endfor %}
 
-  {% endif %}</ul>
+  {% endif %}</ul></h2>
 
 <!--utc_now {{ current_time_utc }}-->
 
