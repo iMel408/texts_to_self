@@ -88,6 +88,7 @@ def receive_reply():
 def verify_sms(to, body, job_id, from_=os.environ['FROM_PHONE']):
     """create sms event"""
 
+
     message = CLIENT.messages.create(
         to=to,
         from_=from_,

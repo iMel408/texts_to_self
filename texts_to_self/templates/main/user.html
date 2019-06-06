@@ -87,7 +87,7 @@ let chart = new Chart(ctx, {
 </script>
 </div>
     <h3>Daily Logs:</h3><a href="{{  url_for('main.setup') }}">Edit</a>
-<ul>  {% for event in events %}
+<ul> {% for event in events %}
 
    <li>{{ event.date_added.strftime("%m-%d-%y") }} : {{ event.msg_body }}
             {% if event.comment %}
@@ -95,7 +95,7 @@ let chart = new Chart(ctx, {
   {% endif %}
     {% endfor %}
 
-  {% endif %}</ul></h2>
+  {% endif %}</ul>
 
 <!--utc_now {{ current_time_utc }}-->
 
