@@ -67,6 +67,8 @@ nav ul li a, nav ul li span, header .action {
 
 .content {
   padding: 0 1rem 1rem;
+  max-width: fit-content;
+  max-height: fit-content;
 }
 
 .content > header {
@@ -83,8 +85,9 @@ nav ul li a, nav ul li span, header .action {
 .flash {
   margin: 1em 0;
   padding: 1em;
-  background: rgba(250,174,50,1);
-  border: 2px solid #2799a8;
+  background: rgba(42, 162, 168, 0.43);
+  border: 2px solid #ff871d;
+  font-family: 'Josefin Sans', sans-serif;
 }
 
 .content:last-child {

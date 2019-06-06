@@ -86,6 +86,9 @@ def setup():
         if not user_time:
             error = 'Time is Required!'
 
+        if not phone:
+            error = 'Phone Number is Required!'
+
         if error is not None:
             flash(error)
         else:
