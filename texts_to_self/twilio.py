@@ -81,35 +81,3 @@ def receive_reply():
     print(resp)
 
     return str(resp)
-
-
-#
-# @bp.route('/verification', methods=['GET', 'POST'])
-# def verify_sms(to, body, job_id, from_=os.environ['FROM_PHONE']):
-#     """create sms event"""
-#
-#
-#     message = CLIENT.messages.create(
-#         to=to,
-#         from_=from_,
-#         body=body
-#     )
-#
-#     msg_type = 'verification'
-#     job_id = job_id
-#     msg_sid = message.sid
-#     user_phone = message.to
-#     body = message.body
-#     msg_body = body
-#     msg_status = message.status
-#
-#     new_verification_ = Event(
-#         msg_type=msg_type,
-#         job_id=job_id,
-#         msg_sid=msg_sid,
-#         user_phone=user_phone,
-#         msg_body=msg_body,
-#         msg_status=msg_status
-#     )
-#
-#     db.session.add(new_verification_)

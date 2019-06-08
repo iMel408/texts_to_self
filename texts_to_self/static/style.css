@@ -1,6 +1,6 @@
 html {
   font-family: 'Josefin Sans', sans-serif;
-  background: lightgray;
+  background: white;
   padding: .5rem;
 }
 
@@ -107,17 +107,18 @@ nav ul li a, nav ul li span, header .action {
 }
 
 .content input, .content textarea {
-  margin-bottom: 1em;
-  max-width: 200px;
+  margin-bottom: 0em;
+  max-width: 12em;
 }
 
 .content textarea {
-  min-height: 12em;
-  resize: vertical;
+  min-height: 1em;
+  max-width: 24em;
+  resize: both;
 }
 
 .content select {
-  max-width: fit-content;
+  max-width: 8em;
 }
 
 .content span {
@@ -136,9 +137,11 @@ input[type=submit] {
 .chartdiv {
   width: 900px;
   height: 400px;
+
 }
 
 .chartdiv canvas {
   max-width: 100%;
   max-height: 100%;
+  font-size: 1em;
 }

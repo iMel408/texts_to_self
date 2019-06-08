@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+   <h1>{% block title %}Edit Event Details{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+
+   <form method="post">
+
+       <label for="date_added">Date:</label>
+       <b>{{ event_id.date_added }} </b><br><br>
+
+       <label for="msg_body">Level</label>
+       <select id="msg_body" name="msg_body" selected = "{{ event_id.msg_body }}" required>
+            {% for i in range(0,11) %}
+        <option> {{i}} </option>
+        {% endfor %}
+       </select> <br><br>
+
+       <label for="comment">Comment</label><br>
+       <textarea maxlength="50" id="comment" name="comment" value = "{{ request.form['comment'] }}" required>
+            {% for comment in msg_lst %}
+        {{ "selected" if comment == event_id.msg_txt else '' }} > {{msg}}
+        {% endfor %}
+       </textarea>
+
+
+
+       <input type="submit" value="Save">
+   </form>
+
+{% endblock %}

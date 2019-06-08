@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-
 <h3>Profile Name:</h3> <ul> <b>{{ user.username }} </b></ul>
 
   {% if job %}
@@ -86,17 +85,25 @@ let chart = new Chart(ctx, {
 
 </script>
 </div>
-    <h3>Daily Logs:</h3><a href="{{  url_for('main.setup') }}">Edit</a>
-<ul> {% for event in events %}
 
-   <li>{{ event.date_added.strftime("%m-%d-%y") }} : {{ event.msg_body }}
+<h3>Daily Logs:</h3>
+
+<form action="" method="post">
+<input type="date" id="start_date" name="start_date" value={{start_date.strftime('%Y-%m-%d')}}>
+<input type="date" id="end_date" name="end_date" value={{end_date.strftime('%Y-%m-%d')}}>
+<input type="submit" value="Filter">
+
+<ul class="fa-ul">
+
+{% for event in events %}
+    {% if event.date_added.strftime('%Y-%m-%d') >= start_date.strftime('%Y-%m-%d') and event.date_added.strftime('%Y-%m-%d') <= end_date.strftime('%Y-%m-%d') %}
+   <li>{{ event.date_added.strftime('%m-%d-%y') }} : {{ event.msg_body }}
             {% if event.comment %}
-            <i> - {{ event.comment }}</i> </li>
-  {% endif %}
+            <i> - {{ event.comment }}</i>
+       {% endif %}<a href="{{  url_for('main.edit', id=event['id']) }}"><i class="fa-li fa fa-edit"></i> </a></li>
+    {% endif %}
     {% endfor %}
-
-  {% endif %}</ul>
-
-<!--utc_now {{ current_time_utc }}-->
-
+    {% endif %}
+</ul>
 {% endblock %}
+</form>

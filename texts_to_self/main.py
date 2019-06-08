@@ -1,5 +1,5 @@
 import pytz
-import datetime
+from datetime import timedelta
 from flask import Blueprint, flash, request, render_template, g, redirect, url_for
 from texts_to_self.auth import login_required
 from twilio.twiml.messaging_response import MessagingResponse
@@ -18,16 +18,20 @@ def user_page():
     user_job = Job.query.filter_by(user=user).first()
     current_time_utc = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 
+    start_date = datetime.today() - timedelta(days=30)
+    end_date = datetime.today()
+
     if user_job:
 
         local_job_time = datetime.now(pytz.utc).replace(hour=int(user_job.time[:2]), minute=int(user_job.time[3:4]),
                                                         second=00).astimezone(pytz.timezone(user_job.timezone)).strftime("%I:%M %p %Z")
 
-        print("utc:", current_time_utc)
-        print("user:", local_job_time)
-        print("user_time:", user_job.time)
+        # start_date = datetime.today() - timedelta(days=30)
+        # end_date = datetime.today()
 
+        # print(start_date.strftime("%Y-%m-%d"))
         events = Event.query.filter_by(job_id=user_job.id, msg_type='inbound').order_by(Event.date_added).all()
+        # thirty_days = Event.query.filter(Event.job_id==user_job.id, Event.msg_type=='inbound', Event.date_added >= start_date).order_by(Event.date_added).all()
 
         line_labels = []
         line_values = []
@@ -47,10 +51,13 @@ def user_page():
                                labels=line_labels,
                                values=line_values,
                                comments=line_comments,
+                               max_date=line_labels[-1],
+                               start_date=start_date,
+                               end_date=end_date,
                                current_time_utc=current_time_utc,
                                local_job_time=local_job_time)
 
-    return render_template('main/user.html', user=user, current_time_utc=current_time_utc)
+    return render_template('main/user.html', user=user, current_time_utc=current_time_utc, start_date=start_date, end_date=end_date)
 
 
 @bp.route('/setup', methods=('GET', 'POST'))
@@ -168,3 +175,37 @@ def update(id):
             return redirect(url_for('main.user_page'))
 
     return render_template('main/update.html', user=user, tz_list=tz_list, msg_lst=msg_lst, local_job_time=local_job_time, job_id=job_id)
+
+
+@bp.route('/<int:id>/edit', methods=('GET', 'POST'))
+@login_required
+def edit(id):
+
+    user = g.user
+    event_id = Event.query.get(id)
+    print(event_id)
+
+    if request.method == 'POST':
+
+        date_added = request.form['date_added']
+        msg_body = request.form['msg_body']
+        comment = request.form['comment']
+        error = None
+
+        if not msg_body:
+            error = 'Level is required.'
+
+        if error is not None:
+            flash(error)
+        else:
+            update_event = Event.query.get(id)
+            update_event.user_id = user.id
+            update_event.date_added = date_added
+            update_event.msg_body = msg_body
+            update_event.comment = comment
+
+            db.session.commit()
+            flash('Event has been updated')
+            return redirect(url_for('main.user_page'))
+
+    return render_template('main/edit.html', user=user, event_id=event_id)
