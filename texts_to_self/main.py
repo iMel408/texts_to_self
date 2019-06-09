@@ -57,7 +57,6 @@ def user_page():
                                labels=line_labels,
                                values=line_values,
                                comments=line_comments,
-                               max_date=line_labels[-1],
                                start_date=str(start_date),
                                end_date=str(end_date),
                                current_time_utc=current_time_utc,
