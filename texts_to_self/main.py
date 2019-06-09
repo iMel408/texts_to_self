@@ -29,8 +29,8 @@ def user_page():
         end_date = request.args.get("end_date", default=date.today())
 
 
-        events = Event.query.filter_by(job_id=user_job.id, msg_type='inbound').order_by(Event.date_added).all()
-        # thirty_days = Event.query.filter(Event.job_id==user_job.id, Event.msg_type=='inbound', Event.date_added >= start_date).order_by(Event.date_added).all()
+        # events = Event.query.filter_by(job_id=user_job.id, msg_type='inbound').order_by(Event.date_added).all()
+        events = Event.query.filter(Event.job_id==user_job.id, Event.msg_type=='inbound', Event.date_added >= start_date).order_by(Event.date_added).all()
 
         line_labels = []
         line_values = []
