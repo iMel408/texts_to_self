@@ -89,14 +89,14 @@ let chart = new Chart(ctx, {
 <h3>Daily Logs:</h3>
 
 <form action="">
-<input type="date" id="start_date" name="start_date" value={{start_date.strftime('%Y-%m-%d')}}>
-<input type="date" id="end_date" name="end_date" value={{end_date.strftime('%Y-%m-%d')}}>
+<input type="date" id="start_date" name="start_date" value={{start_date}}>
+<input type="date" id="end_date" name="end_date" value={{end_date}}>
 <input type="submit" value="Filter">
 
 <ul class="fa-ul">
 
 {% for event in events %}
-    {% if event.date_added.strftime('%Y-%m-%d') >= start_date.strftime('%Y-%m-%d') and event.date_added.strftime('%Y-%m-%d') <= end_date.strftime('%Y-%m-%d') %}
+    {% if event.date_added.strftime('%Y-%m-%d') >= start_date and event.date_added.strftime('%Y-%m-%d') <= end_date %}
    <li>{{ event.date_added.strftime('%m-%d-%y') }} : {{ event.msg_body }}
             {% if event.comment %}
             <i> - {{ event.comment }}</i>

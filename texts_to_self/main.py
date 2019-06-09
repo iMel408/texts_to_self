@@ -17,19 +17,17 @@ def user_page():
     user = g.user
     user_job = Job.query.filter_by(user=user).first()
     current_time_utc = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-
-    start_date = datetime.today() - timedelta(days=30)
-    end_date = datetime.today()
+    # start_date = datetime.today() - timedelta(days=30)
+    # end_date = datetime.today()
 
     if user_job:
 
         local_job_time = datetime.now(pytz.utc).replace(hour=int(user_job.time[:2]), minute=int(user_job.time[3:4]),
                                                         second=00).astimezone(pytz.timezone(user_job.timezone)).strftime("%I:%M %p %Z")
 
-        # start_date = datetime.today() - timedelta(days=30)
-        # end_date = datetime.today()
+        start_date = request.args.get("start_date", default=datetime.today() - timedelta(days=30))
+        end_date = request.args.get("end_date", default=datetime.today())
 
-        # print(start_date.strftime("%Y-%m-%d"))
         events = Event.query.filter_by(job_id=user_job.id, msg_type='inbound').order_by(Event.date_added).all()
         # thirty_days = Event.query.filter(Event.job_id==user_job.id, Event.msg_type=='inbound', Event.date_added >= start_date).order_by(Event.date_added).all()
 
@@ -57,7 +55,7 @@ def user_page():
                                current_time_utc=current_time_utc,
                                local_job_time=local_job_time)
 
-    return render_template('main/user.html', user=user, current_time_utc=current_time_utc, start_date=start_date, end_date=end_date)
+    return render_template('main/user.html', user=user, current_time_utc=current_time_utc)
 
 
 @bp.route('/setup', methods=('GET', 'POST'))
