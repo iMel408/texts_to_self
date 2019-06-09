@@ -1,5 +1,5 @@
 import pytz
-from datetime import timedelta
+from datetime import timedelta, date
 from flask import Blueprint, flash, request, render_template, g, redirect, url_for
 from texts_to_self.auth import login_required
 from twilio.twiml.messaging_response import MessagingResponse
@@ -25,8 +25,9 @@ def user_page():
         local_job_time = datetime.now(pytz.utc).replace(hour=int(user_job.time[:2]), minute=int(user_job.time[3:4]),
                                                         second=00).astimezone(pytz.timezone(user_job.timezone)).strftime("%I:%M %p %Z")
 
-        start_date = request.args.get("start_date", default=datetime.today() - timedelta(days=30))
-        end_date = request.args.get("end_date", default=datetime.today())
+        start_date = request.args.get("start_date", default=date.today() - timedelta(days=30))
+        end_date = request.args.get("end_date", default=date.today())
+
 
         events = Event.query.filter_by(job_id=user_job.id, msg_type='inbound').order_by(Event.date_added).all()
         # thirty_days = Event.query.filter(Event.job_id==user_job.id, Event.msg_type=='inbound', Event.date_added >= start_date).order_by(Event.date_added).all()
@@ -39,6 +40,13 @@ def user_page():
             line_labels.append(event.date_added.strftime("%m-%d-%y"))
             line_values.append(event.msg_body)
             line_comments.append(event.comment)
+            print("event.date_added:",event.date_added)
+            print("event.date_added.strftime('%Y-%m-%d'):",event.date_added.strftime('%Y-%m-%d'))
+            print("type(event.date_added):", type(event.date_added))
+            print("start_date:",start_date)
+            print("type(start_date):",type(start_date))
+            print("end_date:",end_date)
+            print("type(end_date):", type(end_date))
 
         return render_template('main/user.html',
                                user=user,
@@ -50,8 +58,8 @@ def user_page():
                                values=line_values,
                                comments=line_comments,
                                max_date=line_labels[-1],
-                               start_date=start_date,
-                               end_date=end_date,
+                               start_date=str(start_date),
+                               end_date=str(end_date),
                                current_time_utc=current_time_utc,
                                local_job_time=local_job_time)
 
