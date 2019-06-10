@@ -11,7 +11,7 @@ def run_jobs():
     #     db.init_app(app)
 
     now = datetime.utcnow()
-    print("Current Hour:", now.hour)
+    print("Current Hour:", now.strftime("%H"))
     jobs_due = Job.query.filter_by(time=str(now.strftime("%H")) + ':00').all()
 
     # jobs_due = session.query(Job).filter_by(time=str(now.hour)+':00').options(joinedload('*')).all()
