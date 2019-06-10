@@ -19,7 +19,7 @@
             </select>
 
         <label for="user_time">Time </label>
-        <input id="user_time" type="time" step="1800" name="user_time" value="{{ local_job_time[:5]}}" required>
+        <input id="user_time" type="time" step="1800" name="user_time" value="{{ local_job_time_24h[:5] }}" required>
 
 
        <label for="timezone">Timezone</label>
@@ -32,19 +32,14 @@
        <label for="msg_txt">Prompt</label>
        <select id="msg_txt" name="msg_txt" value = "{{ request.form['msg_txt'] }}" required>
             {% for msg in msg_lst %}
-        <option {{ "selected" if msg == job_id.msg_txt else '' }} > {{msg}}    </option>
+        <option {{ "selected" if msg == job_id.msg_txt else '' }} > {{msg}} </option>
         {% endfor %}
        </select>
 
        <label for="active">Active</label>
        <select id="active" name="active" value = "{{ request.form['active'] }}" required>
-            {% for item in ['Yes','No'] %}
-                {% if job_id.active %}
-       <option selected="Yes"> {{item}}  </option>
-           {% else %}
-           <option selected="No"> {{item}}  </option>
-           {% endif %}
-        {% endfor %}
+        <option selected = "Yes" > No </option>
+       <option selected = "Yes" > Yes </option>
        </select><br>
 
        <input type="submit" value="Save">

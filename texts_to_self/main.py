@@ -25,6 +25,7 @@ def user_page():
         local_job_time = datetime.now(pytz.utc).replace(hour=int(user_job.time[:2]), minute=int(user_job.time[3:4]),
                                                         second=00).astimezone(pytz.timezone(user_job.timezone)).strftime("%I:%M %p %Z")
 
+
         start_date = request.args.get("start_date", default=date.today() - timedelta(days=30))
         end_date = request.args.get("end_date", default=date.today())
 
@@ -40,13 +41,6 @@ def user_page():
             line_labels.append(event.date_added.strftime("%m-%d-%y"))
             line_values.append(event.msg_body)
             line_comments.append(event.comment)
-            print("event.date_added:",event.date_added)
-            print("event.date_added.strftime('%Y-%m-%d'):",event.date_added.strftime('%Y-%m-%d'))
-            print("type(event.date_added):", type(event.date_added))
-            print("start_date:",start_date)
-            print("type(start_date):",type(start_date))
-            print("end_date:",end_date)
-            print("type(end_date):", type(end_date))
 
         return render_template('main/user.html',
                                user=user,
@@ -60,7 +54,8 @@ def user_page():
                                start_date=str(start_date),
                                end_date=str(end_date),
                                current_time_utc=current_time_utc,
-                               local_job_time=local_job_time)
+                               local_job_time=local_job_time
+                               )
 
     return render_template('main/user.html', user=user, current_time_utc=current_time_utc)
 
@@ -141,10 +136,9 @@ def update(id):
                'What was your level of depression today? (1-10)',
                'What level were you at today? (1-10)']
 
-    local_job_time = datetime.now(pytz.utc).replace(hour=int(job_id.time[:2]), minute=int(job_id.time[3:4]),
-                                                    second=00).astimezone(pytz.timezone(job_id.timezone)).strftime(
-        "%I:%M %p")
-    print("local_job_time:", local_job_time)
+    local_job_time_24h = datetime.now(pytz.utc).replace(hour=int(job_id.time[:2]), minute=int(job_id.time[3:4]), second=00).astimezone(pytz.timezone(job_id.timezone)).strftime("%T:%M")
+
+    print("local_job_time_24h:", local_job_time_24h)
 
     if request.method == 'POST':
 
@@ -179,7 +173,7 @@ def update(id):
             flash('Settings Updated')
             return redirect(url_for('main.user_page'))
 
-    return render_template('main/update.html', user=user, tz_list=tz_list, msg_lst=msg_lst, local_job_time=local_job_time, job_id=job_id)
+    return render_template('main/update.html', user=user, tz_list=tz_list, msg_lst=msg_lst, local_job_time_24h=local_job_time_24h, job_id=job_id)
 
 
 @bp.route('/<int:id>/edit', methods=('GET', 'POST'))

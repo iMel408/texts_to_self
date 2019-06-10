@@ -118,7 +118,7 @@ nav ul li a, nav ul li span, header .action {
 }
 
 .content select {
-  max-width: 8em;
+  max-width: min-content;
 }
 
 .content span {
