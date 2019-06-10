@@ -36,6 +36,7 @@ def send_sms(to, body, job_id, from_=os.environ['FROM_PHONE']):
     )
 
     db.session.add(new_event)
+    session.clear()
 
 
 @bp.route('/incoming', methods=['GET', 'POST'])
@@ -44,16 +45,16 @@ def receive_reply():
 
     job = Job.query.filter_by(phone=request.values.get('From')).first()
 
+    existing_entry = Event.query.filter_by(job_id=job.id, date_added=datetime.utcnow().strftime("%Y-%m-%d")).first()
+
+    print("replacing existing_entry:", existing_entry)
+
     msg_type = 'inbound'
     job_id = job.id
     msg_sid = request.values.get('MessageSid')
     user_phone = request.values.get('From')
     msg_body = request.values.get('Body')
     msg_status = request.values.get('SmsStatus')
-
-    existing_entry = Event.query.filter_by(job_id=job.id, date_added=datetime.utcnow().strftime("%Y-%m-%d")).first()
-
-    print("existing_entry:", existing_entry)
 
     if not existing_entry:
 
@@ -66,7 +67,6 @@ def receive_reply():
             msg_status=msg_status
         )
         db.session.add(new_reply)
-        db.session.commit()
 
     else:
         existing_entry.msg_sid = msg_sid
