@@ -8,8 +8,8 @@ from datetime import timedelta
 broker_url = os.environ['REDIS_URL']
 result_backend = os.environ['REDIS_URL']
 beat_schedule = {
-    'run_every_15min': {
+    'run_every_hour': {
         'task': 'texts_to_self.tasks.run_jobs',
-        'schedule': timedelta(seconds=900)
+        'schedule': timedelta(seconds=3600)
     },
 }
