@@ -13,7 +13,6 @@ def run_jobs():
     now = datetime.utcnow()
     print("Current Hour:", now.strftime('%H'))
     print("time value:", str(now.strftime('%H')) + ':00')
-    type()
     jobs_due = Job.query.filter_by(time=str(now.strftime('%H')) + ':00').all()
     print(jobs_due)
 

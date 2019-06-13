@@ -36,7 +36,6 @@ def send_sms(to, body, job_id, from_=os.environ['FROM_PHONE']):
     )
 
     db.session.add(new_event)
-    session.clear()
 
 
 @bp.route('/incoming', methods=['GET', 'POST'])
@@ -76,7 +75,7 @@ def receive_reply():
     db.session.commit()
 
     resp = MessagingResponse()
-    resp.message("Your response has been logged.")
+    resp.message("Woot! I've added your response. ")
 
     print(resp)
 
