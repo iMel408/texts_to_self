@@ -44,7 +44,7 @@ def receive_reply():
 
     job = Job.query.filter_by(phone=request.values.get('From')).first()
 
-    existing_entry = Event.query.filter_by(job_id=job.id, Event.msg_type!='outbound', date_added=datetime.utcnow().strftime("%Y-%m-%d")).first()
+    existing_entry = Event.query.filter_by(job_id=job.id, msg_type='inbound', date_added=datetime.utcnow().strftime("%Y-%m-%d")).first()
 
     print("replacing existing_entry:", existing_entry)
 
