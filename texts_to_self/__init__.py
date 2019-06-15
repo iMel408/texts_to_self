@@ -42,53 +42,8 @@ def create_app():
     app.register_blueprint(main.bp)
     app.add_url_rule('/', endpoint='user')
 
-    # @app.route("/incoming", methods=['GET', 'POST'])
-    # def receive_reply():
-    #     """Respond to incoming messages with a friendly SMS."""
-    #
-    #     job = Job.query.filter_by(phone=request.values.get('From')).first()
-    #
-    #     msg_type = 'inbound'
-    #     job_id = job.id
-    #     msg_sid = request.values.get('MessageSid')
-    #     user_phone = request.values.get('From')
-    #     msg_body = request.values.get('Body')
-    #     msg_status = request.values.get('SmsStatus')
-    #
-    #     existing_entry = Event.query.filter_by(job_id = job.id, date_added=datetime.utcnow().strftime("%Y-%m-%d")).first()
-    #
-    #     print("existing_entry:", existing_entry)
-    #
-    #     if not existing_entry:
-    #
-    #         new_reply = Event(
-    #             msg_type=msg_type,
-    #             job_id=job_id,
-    #             msg_sid=msg_sid,
-    #             user_phone=user_phone,
-    #             msg_body=msg_body,
-    #             msg_status=msg_status
-    #         )
-    #         db.session.add(new_reply)
-    #         db.session.commit()
-    #
-    #     else:
-    #         existing_entry.msg_sid=msg_sid
-    #         existing_entry.msg_body=msg_body
-    #         existing_entry.date_updated=datetime.utcnow()
-    #
-    #     db.session.commit()
-    #
-    #     resp = MessagingResponse()
-    #     resp.message("Your response has been logged.")
-    #
-    #     print(resp)
-    #
-    #     return str(resp)
-
     from . import tasks
 
     app.celery = make_celery(app)
 
     return app
-
