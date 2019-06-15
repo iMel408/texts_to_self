@@ -64,7 +64,7 @@ let chart = new Chart(ctx, {
             label: function(tooltipItems, comments) {
                     {% for item in comments %}
                     return tooltipItems.yLabel +
-                     `{{comments | safe}}`.split(",")[tooltipItems.index].replace('[',' ').replace(']','').replace("'None'", " ");
+                     `{{comments | safe}}`.split(",")[tooltipItems.index].replace('[',' ').replace(']','').replace("None", " ");
                 {% endfor %};
             }
           }
