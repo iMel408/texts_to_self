@@ -2,7 +2,7 @@
 
 {% block header %}
 
-   <h1>{% block title %}Edit Event Details{% endblock %}</h1>
+   <h1>{% block title %}Edit Date Details{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
@@ -26,8 +26,6 @@
         {{ "selected" if comment == event_id.msg_txt else '' }} > {{msg}}
         {% endfor %}
        </textarea>
-
-
 
        <input type="submit" value="Save">
    </form>

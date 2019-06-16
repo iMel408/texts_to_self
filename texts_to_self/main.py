@@ -114,7 +114,7 @@ def setup():
             db.session.commit()
             resp = MessagingResponse()
             resp.message("Your account is now active.")
-            flash('Setup Completed')
+            flash('Setup Complete.')
             return redirect(url_for('main.user_page'))
 
     return render_template('main/setup.html', user=user, tz_list=tz_list, msg_lst=msg_lst)
@@ -126,8 +126,6 @@ def update(id):
 
     user = g.user
     job_id = Job.query.get(id)
-    # job_id = id
-    print(job_id)
 
     tz_list = ['US/Pacific', 'US/Central', 'US/Eastern', 'US/Mountain', 'US/Hawaii', 'US/Alaska', 'US/Arizona',
                'US/East-Indiana', 'US/Indiana-Starke', 'US/Michigan']
@@ -170,7 +168,7 @@ def update(id):
                 update_job.active = False
 
             db.session.commit()
-            flash('Settings Updated')
+            flash('Settings have been updated.')
             return redirect(url_for('main.user_page'))
 
     return render_template('main/update.html', user=user, tz_list=tz_list, msg_lst=msg_lst, local_job_time_24h=local_job_time_24h, job_id=job_id)
@@ -208,3 +206,20 @@ def edit(id):
             return redirect(url_for('main.user_page'))
 
     return render_template('main/edit.html', user=user, event_id=event_id)
+
+
+@bp.route('/delete', methods=('POST',))
+@login_required
+def delete():
+
+    user = g.user
+    print(user)
+    job = Job.query.filter_by(user=user).first()
+    print(job)
+    events = Event.query.filter_by(job_id=job.id).delete()
+
+    db.session.delete(job)
+    db.session.commit()
+
+    flash('Your phone number and associated log data has been deleted.')
+    return redirect(url_for('main.user_page'))

@@ -8,7 +8,7 @@ body {
   max-width: 960px;
   margin: 0 auto;
   background: #f1ffff;
-  line-height: 1.4;
+  line-height: 1.5;
   padding: 1em;
 }
 
@@ -85,7 +85,7 @@ nav ul li a, nav ul li span, header .action {
 
 .flash {
   margin: 1em 0;
-  padding: 1em;
+  padding: 0.3em;
   background: rgba(42, 162, 168, 0.43);
   border: 2px solid #ff871d;
   font-family: 'Josefin Sans', sans-serif;
@@ -144,4 +144,29 @@ input[type=submit] {
   max-width: 100%;
   max-height: 100%;
   font-size: 1em;
+}
+
+table {
+    padding: 3px;
+    width: 100%;
+}
+
+td {
+  text-align: center;
+  border-spacing: 20px;
+}
+
+.comment {
+  font-style: italic;
+  text-align: left;
+}
+
+.active {
+  color: #13a864;
+  font-weight: bold;
+}
+
+.inactive {
+  color: #ff6c23;
+  font-weight: bold;
 }

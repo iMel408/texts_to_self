@@ -15,7 +15,7 @@
 
 {% else %}
 
- <h3>Job Settings:</h3> <li> Create your first prompt - <a href="{{  url_for('main.setup') }}">Setup</a> </li>
+ <h3>Job Settings:</h3> <li> Create your prompt - <a href="{{  url_for('main.setup') }}">Setup</a> </li>
 
   {% endif %}
 
@@ -91,17 +91,40 @@ let chart = new Chart(ctx, {
 <input type="date" id="end_date" name="end_date" value={{end_date}}>
 <input type="submit" value="Filter">
 
-<ul class="fa-ul">
 
+
+<table style='max-width: max-content'>
+
+  <tr>
+    <th>Edit</th>
+    <th>Date</th>
+    <th>Level</th>
+    <th>Comment</th>
+  </tr>
+
+
+<ul class="fa-ul">
 {% for event in events %}
     {% if event.date_added.strftime('%Y-%m-%d') >= start_date and event.date_added.strftime('%Y-%m-%d') <= end_date %}
-   <li>{{ event.date_added.strftime('%m-%d-%y') }} : {{ event.msg_body }}
-            {% if event.comment %}
-            <i> - {{ event.comment }}</i>
-       {% endif %}<a href="{{  url_for('main.edit', id=event['id']) }}"><i class="fa-li fa fa-edit"></i> </a></li>
-    {% endif %}
-    {% endfor %}
-    {% endif %}
+    <tr><td><a href="{{  url_for('main.edit', id=event['id']) }}"><i class="fa fa-edit"></i> </a></td>
+    <td>{{ event.date_added.strftime('%m-%d-%y') }}</td> <td>{{ event.msg_body }}</td>
+          <td> {% if event.comment %}
+              <div class="comment">{{ event.comment }}</div>
+              {% endif %}
+    {% endif %}</td>
+    {% endfor %}</tr>
+
 </ul>
-{% endblock %}
+    </table>
 </form>
+
+<br>
+<br>
+<form action='/delete' method='post'>
+    <div class="inactive"> Delete my number and associated log data please! :)
+   <input type="submit" onclick="return confirm('Are you sure?')" value="Delete">
+</form>
+    {% endif %}
+{% endblock %}
+
+
