@@ -30,13 +30,13 @@ a {
 
 hr {
   border: none;
-  border-top: 1px solid lightgray;
+  /*border-top: 1px solid lightgray;*/
 }
 
 nav {
   background: #fbbf5d;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   padding: 0 0rem;
 }
 
@@ -72,7 +72,7 @@ nav ul li a, nav ul li span, header .action {
 }
 
 .content > header {
-  border-bottom: 1px solid lightgray;
+  /*border-bottom: 1px solid lightgray;*/
   display: flex;
   align-items: flex-end;
 
@@ -97,7 +97,7 @@ nav ul li a, nav ul li span, header .action {
 
 .content form {
   margin: 1em 0;
-  display: block;
+  display: inline;
   flex-direction: column;
 }
 
@@ -118,7 +118,7 @@ nav ul li a, nav ul li span, header .action {
 }
 
 .content select {
-  max-width: min-content;
+  max-width: fit-content;
 }
 
 .content span {
@@ -135,20 +135,21 @@ input[type=submit] {
 }
 
 .chartdiv {
-  width: 900px;
-  height: 400px;
+  max-width: 900px;
+  max-height: 400px;
 
 }
 
 .chartdiv canvas {
   max-width: 100%;
   max-height: 100%;
-  font-size: 1em;
+  font-size: inherit;
 }
 
 table {
     padding: 3px;
-    width: 100%;
+    width: fit-content;
+    font-size: medium;
 }
 
 td {
@@ -157,7 +158,6 @@ td {
 }
 
 .comment {
-  font-style: italic;
   text-align: left;
 }
 

@@ -26,7 +26,7 @@ def user_page():
                                                         second=00).astimezone(pytz.timezone(user_job.timezone)).strftime("%I:%M %p %Z")
 
 
-        start_date = request.args.get("start_date", default=date.today() - timedelta(days=30))
+        start_date = request.args.get("start_date", default=date.today() - timedelta(days=14))
         end_date = request.args.get("end_date", default=date.today())
 
 

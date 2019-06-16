@@ -22,12 +22,13 @@
   {% if events %}
 
 <div class="chartdiv">
-<canvas id="myChart" width="900" height="400"></canvas>
+<canvas id="myChart"></canvas>
 <script>
 
 let ctx = document.getElementById('myChart').getContext('2d');
 steps = 10;
 max = {{ max }};
+
 /*** Gradient ***/
 let gradient = ctx.createLinearGradient(0, 0, 0, 400);
     gradient.addColorStop(0, 'rgba(250,174,50,1)');
@@ -53,6 +54,7 @@ let chart = new Chart(ctx, {
     // Configuration options go here
       options: {
         responsive: true,
+        maintainAspectRatio: true,
         datasetStrokeWidth: 3,
         pointDotStrokeWidth: 4,
         tooltipFillColor: 'rgba(255,0,0,0.8)',
@@ -93,13 +95,13 @@ let chart = new Chart(ctx, {
 
 
 
-<table style='max-width: max-content'>
+<table>
 
   <tr>
-    <th>Edit</th>
-    <th>Date</th>
-    <th>Level</th>
-    <th>Comment</th>
+  <th><u>Edit</u></th>
+    <th><u>Date</u></th>
+    <th><u>Level</u></th>
+    <th><u>Comment</u></th>
   </tr>
 
 
@@ -119,9 +121,8 @@ let chart = new Chart(ctx, {
 </form>
 
 <br>
-<br>
 <form action='/delete' method='post'>
-    <div class="inactive"> Delete my number and associated log data please! :)
+    <div class="inactive"> Delete my number and associated log data please! :)</div>
    <input type="submit" onclick="return confirm('Are you sure?')" value="Delete">
 </form>
     {% endif %}
