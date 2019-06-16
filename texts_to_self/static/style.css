@@ -135,7 +135,7 @@ input[type=submit] {
 }
 
 .chartdiv {
-  max-width: 900px;
+  max-width: 800px;
   max-height: 400px;
 
 }
@@ -148,8 +148,8 @@ input[type=submit] {
 
 table {
     padding: 3px;
-    width: fit-content;
-    font-size: medium;
+    width: max-content;
+    width: medium;
 }
 
 td {
