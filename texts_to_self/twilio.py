@@ -75,7 +75,7 @@ def receive_reply():
     db.session.commit()
 
     resp = MessagingResponse()
-    resp.message("Woot! I've recorded your response. texts-to-self.herokuapp.com ")
+    resp.message("Woot! Your log has been updated :) texts-to-self.herokuapp.com ")
 
     print(resp)
 
